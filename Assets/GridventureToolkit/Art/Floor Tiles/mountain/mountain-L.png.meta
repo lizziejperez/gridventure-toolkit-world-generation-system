@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cd7572909bb9df14ab36da9c07768cdc
+guid: fd0c026cf4bf35b4da4c20cac805bd07
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7536752270253581477
-    second: path-incorner-BR2_0
+      213: -4787076592393661631
+    second: mountain-L2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: path-incorner-BR2_0
+      name: mountain-L2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b5b9a6bddb3186790800000000000000
-      internalID: -7536752270253581477
+      spriteID: 143d9c5c333e09db0800000000000000
+      internalID: -4787076592393661631
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      path-incorner-BR2_0: -7536752270253581477
+      mountain-L2_0: -4787076592393661631
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
