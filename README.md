@@ -1,6 +1,6 @@
 # Gridventure Toolkit: World Generation System (Unity C#)
 
-🚧 **Status: In Development (v0.1 - Initial Setup)**
+🚧 **Status: In Development (v0.2 - Tile System Implemented)**
 
 A modular Unity world generation system designed for creating procedural environments using grid-based generation, auto-tiling, and Perlin noise.
 
@@ -8,15 +8,22 @@ This system is part of the **Gridventure Toolkit**, focused on building beginner
 
 ## Overview
 
-This project is currently under active development.
+This project provides a foundation for procedural world generation in Unity using a tile-based workflow.
 
-The goal is to provide a clean, extensible foundation for procedural world generation that can be easily integrated into both 2D Unity projects.
+It now includes a working tilemap system with Rule Tiles, enabling automatic terrain rendering for paths, water, and ground.
+
+## Current Features
+* Grid and Tilemap setup in Unity
+* Tile Palette workflow for painting terrain
+* Path Rule Tile (auto-tiling)
+* Water Rule Tile (auto-tiling)
+* Grass system with random variation (flowers)
+* Layered terrain approach (grass, path, water)
 
 ## Planned Features
 
 * Grid-based world generation
 * Perlin noise for terrain variation and biome distribution
-* Auto-tiling system for seamless tile placement
 * Configurable generation settings
 * Modular architecture for easy extension
 
@@ -25,6 +32,9 @@ The goal is to provide a clean, extensible foundation for procedural world gener
 * Project initialized
 * Repository structure set up
 * Planning system architecture and scope
+* Tilemap system implemented
+* Rule Tile system integrated
+* Terrain rendering working in-scene
 
 ## Design Goals
 
