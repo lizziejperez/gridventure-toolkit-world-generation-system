@@ -1,6 +1,6 @@
 # World Generation System — Notes & Concepts
 
-**Script**: WorldBuilder.cs (in-progress)
+**Script**: WorldBuilder.cs, WorldGenerationController.cs, WorldGenerationSystemConfig.cs
 
 ## Overview
 
