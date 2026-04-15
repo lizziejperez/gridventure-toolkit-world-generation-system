@@ -9,7 +9,7 @@ using UnityEngine;
 /// <summary>
 /// Stores shared world height, width, seed, and debug settings for world generation systems.
 /// </summary>
-[CreateAssetMenu(fileName = "WorldGenerationSystemConfig", menuName = "Scriptable Objects/WorldGenerationSystemConfig")]
+[CreateAssetMenu(fileName = "WorldGenerationSystemConfig", menuName = "Scriptable Objects/Gridventure Toolkit/World Generation System Config")]
 public class WorldGenerationSystemConfig : ScriptableObject
 {
     [Header("World Generation System Configuration Settings")]
@@ -17,6 +17,7 @@ public class WorldGenerationSystemConfig : ScriptableObject
     [SerializeField] public int width = 18;
     [SerializeField] public bool useRandomSeed = true;
     [SerializeField] public int seed = 12345;
+    [SerializeField] public float noiseScale = 20.0f;
 
     [Header("Debug Mode Settings")]
 

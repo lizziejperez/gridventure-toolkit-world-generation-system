@@ -4,6 +4,7 @@
  * Author: Lizzie Perez
  * Version: 0.0
  */
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,8 +16,8 @@ public class WorldGenerationController : MonoBehaviour
 {
     [Header("World Generation Settings")]
     [SerializeField] private WorldGenerationSystemConfig config;
-    [SerializeField] Tilemap worldTileMap;
-    [SerializeField] GameObject features;    
+    [SerializeField] private Tilemap worldTileMap;
+    [SerializeField] private List<TerrainTypeData> terrainTypes;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,13 +27,13 @@ public class WorldGenerationController : MonoBehaviour
             config.seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
         }
 
-        WorldBuilder worldBuilder = new WorldBuilder(config);
+        WorldBuilder worldBuilder = new WorldBuilder(config, terrainTypes);
         worldBuilder.Generate();
 
         if (config.inDebugMode)
         {
             Debug.Log("Seed: "+config.seed); // print generation seed to debug log 
-            worldBuilder.PrintWorldTerrain(); // print the world terrain to debug log            
+            Debug.Log(worldBuilder.WorldTerrainToString()); // print the world terrain to debug log     
         }
     }
 
