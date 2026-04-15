@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ab2e81570c9dc65458a0df690d3446d6
+guid: d9d765ebbb218574e82ff6cd0382d666
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3892754571939386243
-    second: water-outcorner-BL_0
+      213: -6302373645207104085
+    second: bush-2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: water-outcorner-BL_0
+      name: bush-2_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 16
-        height: 16
+        width: 15
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d7c66cd67582af9c0800000000000000
-      internalID: -3892754571939386243
+      spriteID: ba595a3af887988a0800000000000000
+      internalID: -6302373645207104085
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      water-outcorner-BL_0: -3892754571939386243
+      bush-2_0: -6302373645207104085
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
