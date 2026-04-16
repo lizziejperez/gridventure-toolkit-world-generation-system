@@ -1,6 +1,6 @@
 # World Generation System — Notes & Concepts
 
-**Script**: WorldBuilder.cs, WorldGenerationController.cs, WorldGenerationSystemConfig.cs
+**Script**: WorldGenerationSystemConfig.cs, WorldGenerationController.cs, WorldBuilder.cs, WorldRenderer.cs
 
 ## Overview
 
@@ -54,8 +54,7 @@ Core components:
 ## Design Decisions
 
 * Use a ScriptableObject for systems configuration
-* Use a **single logical grid** for terrain generation
-* Use a **dual-grid renderer** for improved visual transitions
+* Use a single logical grid for terrain generation
 * Separate:
   * world data
   * rule validation
@@ -65,7 +64,8 @@ Core components:
 
 ### Structure
 
-- `TerrainType` enum for tile categories (e.g. grass, water, path, cliff)
+- `TerrainTypeData` ScriptableObject for terrain type data
+- `TerrainNoiseRange` struct for Min and Max Perlin noise values assigned to a terrain type
 - `FeatureType` enum for placed world features (e.g. cave, tree, rock, bush)
 
 ## Planned Systems
@@ -74,6 +74,12 @@ Core components:
 
 * Generates the base terrain layout (grass, water, path, cliffs)
 
+### WorldRenderer
+
+* Converts logical terrain into visual tile placement
+* Handles smoothing and multi-tile updates
+* Applies tiles to Unity Tilemaps
+
 ### TerrainRuleProcessor
 
 * Applies rules such as:
@@ -81,15 +87,6 @@ Core components:
   * Path cannot end in water
   * Water overrides grass
   * Cliff overrides grass
-
-### DualGridRenderer
-
-* Converts logical terrain into visual tile placement
-* Handles smoothing and multi-tile updates
-
-### TilemapPainter
-
-* Applies tiles to Unity Tilemaps
 
 ### FeaturePlacer
 
@@ -108,3 +105,5 @@ Core components:
 ## Resources
 
 - Unity Rule Tile documentation: https://docs.unity3d.com/Packages/com.unity.2d.tilemap.extras@4.3/manual/RuleTile.html?q=rule
+- https://unity.com/how-to/scriptableobject-based-enums
+- https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Tilemaps.Tilemap.SetTiles.html

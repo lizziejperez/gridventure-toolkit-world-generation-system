@@ -19,25 +19,44 @@ public class WorldGenerationController : MonoBehaviour
     [SerializeField] private Tilemap worldTileMap;
     [SerializeField] private List<TerrainTypeData> terrainTypes;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /// <summary>
+    /// Initializes world generation when the scene starts.
+    /// Applies config settings, generates terrain, logs debug output, and triggers rendering of the world to the Tilemap.
+    /// </summary>
     void Start()
     {
+        // Set random seed if it's set in the config settings
         if (config.useRandomSeed)
         {
             config.seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
         }
 
+        // Generate the world terrain with Perlin noise
         WorldBuilder worldBuilder = new WorldBuilder(config, terrainTypes);
-        worldBuilder.Generate();
+        bool worldGenerated = worldBuilder.Generate();
 
-        if (config.inDebugMode)
+        if (worldGenerated)
         {
-            Debug.Log("Seed: "+config.seed); // print generation seed to debug log 
-            Debug.Log(worldBuilder.WorldTerrainToString()); // print the world terrain to debug log     
+            if (config.inDebugMode)
+            {
+                Debug.Log("Seed: " + config.seed); // print generation seed to debug log 
+                Debug.Log(worldBuilder.WorldTerrainToString()); // print the world terrain to debug log 
+            }
+
+            // Render the world terrain
+            WorldRenderer worldRenderer = new WorldRenderer(config, worldTileMap, worldBuilder);
+            worldRenderer.Render();
+
+        } else if (config.inDebugMode)
+        {
+            Debug.Log("World generation failed.");
         }
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Reserved for future runtime updates.
+    /// Currently unused.
+    /// </summary>
     void Update()
     {
         
