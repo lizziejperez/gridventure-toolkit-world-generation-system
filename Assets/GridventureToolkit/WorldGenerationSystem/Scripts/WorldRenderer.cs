@@ -13,8 +13,8 @@ using UnityEngine.Tilemaps;
 /// </summary>
 public class WorldRenderer
 {
-    private WorldGenerationSystemConfig config;
-    private Tilemap worldTileMap;
+    private WorldGenerationSystemConfig _config;
+    private Tilemap _worldTileMap;
 
     /// <summary>
     /// Creates a new world renderer.
@@ -27,8 +27,8 @@ public class WorldRenderer
     /// </param>
     public WorldRenderer(WorldGenerationSystemConfig config, Tilemap worldTileMap)
     {
-        this.config = config;
-        this.worldTileMap = worldTileMap;
+        _config = config;
+        _worldTileMap = worldTileMap;
     }
 
     /// <summary>
@@ -45,8 +45,8 @@ public class WorldRenderer
     public bool Render(TerrainTypeData[,] worldTerrain)
     {
         // Check that config settings match worldTerrain data
-        int width = config.width;
-        int height = config.height;
+        int width = _config.Width;
+        int height = _config.Height;
         if ((worldTerrain == null) || (worldTerrain.GetLength(0) != width) || (worldTerrain.GetLength(1) != height))
         {
             return false;
@@ -60,7 +60,7 @@ public class WorldRenderer
             for (int x = 0; x < width; x++)
             {
                 int i = y * width + x;
-                terrainArray[i] = worldTerrain[x, y].tile;
+                terrainArray[i] = worldTerrain[x, y].Tile;
             }
         }
 
@@ -80,10 +80,10 @@ public class WorldRenderer
         }
 
         // Clear the tilemap
-        worldTileMap.ClearAllTiles();
+        _worldTileMap.ClearAllTiles();
 
         // Set the tiles on the tilemap
-        worldTileMap.SetTiles(positions, terrainArray);
+        _worldTileMap.SetTiles(positions, terrainArray);
 
         return true;
     }

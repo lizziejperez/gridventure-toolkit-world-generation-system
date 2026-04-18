@@ -15,12 +15,12 @@ using UnityEngine.Tilemaps;
 public class WorldGenerationController : MonoBehaviour
 {
     [Header("World Generation Settings")]
-    [SerializeField] private WorldGenerationSystemConfig config;
-    [SerializeField] private Tilemap worldTileMap;
-    [SerializeField] private List<TerrainTypeData> terrainTypes;
+    [SerializeField] private WorldGenerationSystemConfig _config;
+    [SerializeField] private Tilemap _worldTileMap;
+    [SerializeField] private List<TerrainTypeData> _terrainTypes;
 
-    private TerrainTypeData[,] currentWorldTerrain;
-    private WorldRenderer worldRenderer;
+    private TerrainTypeData[,] _currentWorldTerrain;
+    private WorldRenderer _worldRenderer;
 
     /// <summary>
     /// Initializes world generation when the scene starts.
@@ -28,26 +28,26 @@ public class WorldGenerationController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        worldRenderer = new WorldRenderer(config, worldTileMap);
+        _worldRenderer = new WorldRenderer(_config, _worldTileMap);
         GenerateWorld();
     }
 
     public void GenerateWorld()
     {
         // Set random seed if it's set in the config settings
-        if (config.useRandomSeed)
+        if (_config.UseRandomSeed)
         {
-            config.seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+            _config.Seed = UnityEngine.Random.Range(int.MinValue, int.MaxValue);
         }
 
         // Generate the world terrain with Perlin noise
-        WorldBuilder worldBuilder = new WorldBuilder(config, terrainTypes);
+        WorldBuilder worldBuilder = new WorldBuilder(_config, _terrainTypes);
         bool worldGenerated = worldBuilder.Generate();
 
         // Handle world generation failure
         if (!worldGenerated)
         {
-            if (config.inDebugMode)
+            if (_config.InDebugMode)
             {
                 Debug.Log("World generation failed.");
             }
@@ -55,16 +55,16 @@ public class WorldGenerationController : MonoBehaviour
         }
 
         // Update current world terrain stored
-        currentWorldTerrain = worldBuilder.GetWorldTerrainData();
+        _currentWorldTerrain = worldBuilder.GetWorldTerrainData();
 
-        if (config.inDebugMode)
+        if (_config.InDebugMode)
         {
-            Debug.Log("Seed: " + config.seed); // print generation seed to debug log 
+            Debug.Log("Seed: " + _config.Seed); // print generation seed to debug log 
             Debug.Log(worldBuilder.WorldTerrainToString()); // print the world terrain to debug log
         }
 
         // Render the new current world terrain
-        worldRenderer.Render(currentWorldTerrain);
+        _worldRenderer.Render(_currentWorldTerrain);
     }
 
     /// <summary>

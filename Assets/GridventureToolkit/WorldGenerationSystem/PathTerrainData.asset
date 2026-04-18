@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ec2e12f6481c8b4c9df5abfd8b108ad, type: 3}
-  m_Name: WaterTerrainSO
+  m_Name: PathTerrainData
   m_EditorClassIdentifier: Assembly-CSharp::TerrainTypeData
-  id: Water
-  debugSymbol: 87
-  targetCoverage: 1
-  tile: {fileID: 11400000, guid: db341ed9bbd74114aa0471b256ee30cb, type: 2}
+  _id: Path
+  _debugSymbol: 80
+  _targetCoverage: 0.25
+  _tile: {fileID: 11400000, guid: bd04cd95a5da0074ead84573a63f3f43, type: 2}

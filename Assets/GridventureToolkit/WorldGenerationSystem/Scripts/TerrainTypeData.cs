@@ -11,13 +11,18 @@ using UnityEngine.Tilemaps;
 public class TerrainTypeData : ScriptableObject
 {
     [Header("Identity")]
-    public string id;
-    public char debugSymbol = '?';
+    [SerializeField] private string _id;
+    [SerializeField] private char _debugSymbol = '?';
 
     [Header("Generation")]
     [Range(0.0f, 1.0f)]
-    public float targetCoverage = 0.0f;
+    [SerializeField] private float _targetCoverage = 0.0f;
 
     [Header("Rendering")]
-    public TileBase tile;
+    [SerializeField] private TileBase _tile;
+
+    public string Id => _id;
+    public char DebugSymbol => _debugSymbol;
+    public float TargetCoverage => _targetCoverage;
+    public TileBase Tile => _tile;
 }

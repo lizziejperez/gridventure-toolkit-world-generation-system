@@ -13,9 +13,9 @@ using UnityEngine;
 /// </summary>
 public class WorldBuilder
 {
-    private WorldGenerationSystemConfig config;
-    private List<TerrainTypeData> terrainTypes;
-    private TerrainTypeData[,] worldTerrain;
+    private WorldGenerationSystemConfig _config;
+    private List<TerrainTypeData> _terrainTypes;
+    private TerrainTypeData[,] _worldTerrain;
 
     /// <summary>
     /// Represents a range of Perlin noise values assigned to a terrain type.
@@ -31,7 +31,7 @@ public class WorldBuilder
             Max = max;
         }
     }
-    private List<TerrainNoiseRange> terrainNoiseRanges;
+    private List<TerrainNoiseRange> _terrainNoiseRanges;
 
     /// <summary>
     /// Creates a new world builder using the provided generation settings.
@@ -44,9 +44,9 @@ public class WorldBuilder
     /// <param name="terrainTypes">A list of all terrain types to generate.</param>
     public WorldBuilder(WorldGenerationSystemConfig config, List<TerrainTypeData> terrainTypes)
     {
-        this.config = config;
-        this.terrainTypes = terrainTypes;
-        worldTerrain = new TerrainTypeData[config.width, config.height];        
+        _config = config;
+        _terrainTypes = terrainTypes;
+        _worldTerrain = new TerrainTypeData[config.Width, config.Height];        
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class WorldBuilder
     public bool Generate()
     {
         // Handle null and empty list of terrain types
-        if (terrainTypes == null || terrainTypes.Count == 0)
+        if (_terrainTypes == null || _terrainTypes.Count == 0)
         {
             return false;
         }
@@ -78,8 +78,8 @@ public class WorldBuilder
     public string WorldTerrainToString()
     {
         // Prevent changes with width and height during method call
-        int width = config.width;
-        int height = config.height;
+        int width = _config.Width;
+        int height = _config.Height;
 
         string terrainGrid = "";
 
@@ -87,7 +87,7 @@ public class WorldBuilder
         {
             for (int x = 0; x < width; x++)
             {
-                terrainGrid += worldTerrain[x, y].debugSymbol + " ";
+                terrainGrid += _worldTerrain[x, y].DebugSymbol + " ";
             }
             terrainGrid += "\n";
         }
@@ -101,7 +101,7 @@ public class WorldBuilder
     /// <returns>A 2D array of the terrain grid.</returns>
     public TerrainTypeData[,] GetWorldTerrainData()
     {
-        return worldTerrain;
+        return _worldTerrain;
     }
 
     /// <summary>
@@ -116,22 +116,22 @@ public class WorldBuilder
         SetupTerrainRanges();
 
         // Set the offsets for Perlin noise samples
-        System.Random rand = new System.Random(config.seed); // Use config seed to create random number generator
+        System.Random rand = new System.Random(_config.Seed); // Use config seed to create random number generator
         float offsetX = rand.Next(-100000, 100000);
         float offsetY = rand.Next(-100000, 100000);
 
         // Apply Perlin noise sampling for procedural terrain generation
-        for (int x = 0; x < config.width; x++)
+        for (int x = 0; x < _config.Width; x++)
         {
-            for (int y = 0; y < config.height; y++)
+            for (int y = 0; y < _config.Height; y++)
             {
                 // Sample Perlin noise
-                float sampleX = (x + offsetX) / config.noiseScale;
-                float sampleY = (y + offsetY) / config.noiseScale;
+                float sampleX = (x + offsetX) / _config.NoiseScale;
+                float sampleY = (y + offsetY) / _config.NoiseScale;
                 float perlinNoise = Mathf.PerlinNoise(sampleX, sampleY);
 
                 // Apply coverage threshold
-                worldTerrain[x, y] = ApplyCoverageThreshold(perlinNoise);
+                _worldTerrain[x, y] = ApplyCoverageThreshold(perlinNoise);
             }
         }
     }
@@ -147,18 +147,18 @@ public class WorldBuilder
     {
         // Calculate terrain noise range sum
         float rangeSum = 0f;
-        for (int i = 0; i < terrainTypes.Count; i++)
+        for (int i = 0; i < _terrainTypes.Count; i++)
         {
-            rangeSum += terrainTypes[i].targetCoverage;
+            rangeSum += _terrainTypes[i].TargetCoverage;
         }
 
         // Setup terrain noise ranges
-        terrainNoiseRanges = new List<TerrainNoiseRange>();
+        _terrainNoiseRanges = new List<TerrainNoiseRange>();
         float start = 0f;
-        for (int i = 0; i < terrainTypes.Count; i++)
+        for (int i = 0; i < _terrainTypes.Count; i++)
         {
-            float end = start + (terrainTypes[i].targetCoverage / rangeSum);
-            terrainNoiseRanges.Add(new TerrainNoiseRange(start, end));
+            float end = start + (_terrainTypes[i].TargetCoverage / rangeSum);
+            _terrainNoiseRanges.Add(new TerrainNoiseRange(start, end));
             start = end;
         }
     }
@@ -174,13 +174,13 @@ public class WorldBuilder
     /// </returns>
     private TerrainTypeData ApplyCoverageThreshold(float perlinNoise)
     {
-        for (int i = 0; i < terrainNoiseRanges.Count; i++)
+        for (int i = 0; i < _terrainNoiseRanges.Count; i++)
         {
-            if (perlinNoise >= terrainNoiseRanges[i].Min && perlinNoise < terrainNoiseRanges[i].Max)
+            if (perlinNoise >= _terrainNoiseRanges[i].Min && perlinNoise < _terrainNoiseRanges[i].Max)
             {
-                return terrainTypes[i];
+                return _terrainTypes[i];
             }
         }
-        return terrainTypes[terrainTypes.Count-1];
+        return _terrainTypes[_terrainTypes.Count-1];
     }
 }

@@ -13,16 +13,27 @@ using UnityEngine;
 public class WorldGenerationSystemConfig : ScriptableObject
 {
     [Header("World Generation System Configuration Settings")]
-    [SerializeField] public int height = 10;
-    [SerializeField] public int width = 18;
-    [SerializeField] public bool useRandomSeed = true;
-    [SerializeField] public int seed = 12345;
-    [SerializeField] public float noiseScale = 20.0f;
+    [SerializeField] private int _height = 10;
+    [SerializeField] private int _width = 18;
+    [SerializeField] private bool _useRandomSeed = true;
+    [SerializeField] private int _seed = 12345;
+    [SerializeField] private float _noiseScale = 10f;
 
     [Header("Debug Mode Settings")]
+    [SerializeField] private bool _inDebugMode = false;
 
-    /// <summary>
-    /// Enables additional debug logging for world generation systems.
-    /// </summary>
-    [SerializeField] public bool inDebugMode = false;
+    public int Height => _height;
+    public int Width => _width;
+    public bool UseRandomSeed
+    {
+        get { return _useRandomSeed; }
+        set { _useRandomSeed = value; }
+    }
+    public int Seed
+    {
+        get { return _seed; }
+        set { _seed = value; }
+    }
+    public float NoiseScale => _noiseScale;
+    public bool InDebugMode => _inDebugMode;
 }
