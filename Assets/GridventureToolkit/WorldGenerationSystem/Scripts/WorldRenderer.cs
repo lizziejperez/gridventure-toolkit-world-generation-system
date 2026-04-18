@@ -15,7 +15,6 @@ public class WorldRenderer
 {
     private WorldGenerationSystemConfig config;
     private Tilemap worldTileMap;
-    private WorldBuilder worldBuilder;
 
     /// <summary>
     /// Creates a new world renderer.
@@ -26,14 +25,10 @@ public class WorldRenderer
     /// <param name="worldTileMap">
     /// The Unity Tilemap where tiles will be rendered.
     /// </param>
-    /// <param name="worldBuilder">
-    /// The world builder containing generated terrain data.
-    /// </param>
-    public WorldRenderer(WorldGenerationSystemConfig config, Tilemap worldTileMap, WorldBuilder worldBuilder)
+    public WorldRenderer(WorldGenerationSystemConfig config, Tilemap worldTileMap)
     {
         this.config = config;
         this.worldTileMap = worldTileMap;
-        this.worldBuilder = worldBuilder;
     }
 
     /// <summary>
@@ -47,20 +42,29 @@ public class WorldRenderer
     /// <returns>
     /// True if rendering was successful; false if terrain data is invalid.
     /// </returns>
-    public bool Render()
+    public bool Render(TerrainTypeData[,] worldTerrain)
     {
-        // Get the terrain tiles as an array
-        TileBase[] terrainArray = worldBuilder.GetWorldTerrain();
-
-        // Check that config settings match
+        // Check that config settings match worldTerrain data
         int width = config.width;
         int height = config.height;
-        if (terrainArray.Length != (width * height))
+        if ((worldTerrain == null) || (worldTerrain.GetLength(0) != width) || (worldTerrain.GetLength(1) != height))
         {
             return false;
         }
 
-        // Set the positions for the tiles on the tilemap
+        // Convert world terrain grid to a corresponding tile array
+        TileBase[] terrainArray = new TileBase[width * height];
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int i = y * width + x;
+                terrainArray[i] = worldTerrain[x, y].tile;
+            }
+        }
+
+        // Get the positions for the tiles on the tilemap
         Vector3Int[] positions = new Vector3Int[width * height];
 
         int offsetX = -(width / 2);
@@ -72,7 +76,7 @@ public class WorldRenderer
             {
                 int i = y * width + x;
                 positions[i] = new Vector3Int(x + offsetX, y + offsetY, 0);
-            }        
+            }
         }
 
         // Clear the tilemap

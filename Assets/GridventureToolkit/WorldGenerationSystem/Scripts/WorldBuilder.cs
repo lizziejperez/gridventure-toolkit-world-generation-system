@@ -6,7 +6,6 @@
  */
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Generates the base logical terrain grid for the world.
@@ -65,9 +64,6 @@ public class WorldBuilder
 
         ApplyNaturalTerrain(); // uses Perlin noise
 
-        // TODO: apply terrain rules
-        // TODO: make path carver
-
         return true;
     }
 
@@ -100,35 +96,12 @@ public class WorldBuilder
     }
 
     /// <summary>
-    /// Converts the internal 2D terrain grid into an array of TileBase objects.
-    /// This format is required by Unity's Tilemap.SetTiles() method.
+    /// Retruns the generated world terrain.
     /// </summary>
-    /// <remarks>
-    /// The array is ordered row by row (left to right, bottom to top), using the index formula: index = y * width + x.
-    /// This ordering must match the renderer's position array.
-    /// </remarks>
-    /// <returns>
-    /// A flattened array of TileBase tiles representing the world terrain.
-    /// </returns>
-    public TileBase[] GetWorldTerrain()
+    /// <returns>A 2D array of the terrain grid.</returns>
+    public TerrainTypeData[,] GetWorldTerrainData()
     {
-        // Prevent changes with width and height during method call
-        int width = config.width;
-        int height = config.height;
-
-        // Convert grid to an array for the renderer
-        TileBase[] terrainArray = new TileBase[width * height];
-        
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int i = y * width + x;
-                terrainArray[i] = worldTerrain[x, y].tile;
-            }
-        }
-
-        return terrainArray;
+        return worldTerrain;
     }
 
     /// <summary>
