@@ -15,4 +15,4 @@ MonoBehaviour:
   id: Path
   debugSymbol: 80
   targetCoverage: 0.5
-  tile: {fileID: 0}
+  tile: {fileID: 11400000, guid: bd04cd95a5da0074ead84573a63f3f43, type: 2}

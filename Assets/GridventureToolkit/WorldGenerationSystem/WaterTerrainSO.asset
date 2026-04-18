@@ -15,4 +15,4 @@ MonoBehaviour:
   id: Water
   debugSymbol: 87
   targetCoverage: 1
-  tile: {fileID: 11400000, guid: d8bbef462a6b74244bf04511e3e2852b, type: 2}
+  tile: {fileID: 11400000, guid: db341ed9bbd74114aa0471b256ee30cb, type: 2}
