@@ -14,7 +14,7 @@ using UnityEngine.Tilemaps;
 public class WorldRenderer
 {
     private WorldGenerationSystemConfig _config;
-    private Tilemap _worldTileMap;
+    private Tilemap _worldTilemap;
 
     /// <summary>
     /// Creates a new world renderer.
@@ -25,10 +25,10 @@ public class WorldRenderer
     /// <param name="worldTileMap">
     /// The Unity Tilemap where tiles will be rendered.
     /// </param>
-    public WorldRenderer(WorldGenerationSystemConfig config, Tilemap worldTileMap)
+    public WorldRenderer(WorldGenerationSystemConfig config, Tilemap worldTilemap)
     {
         _config = config;
-        _worldTileMap = worldTileMap;
+        _worldTilemap = worldTilemap;
     }
 
     /// <summary>
@@ -80,10 +80,10 @@ public class WorldRenderer
         }
 
         // Clear the tilemap
-        _worldTileMap.ClearAllTiles();
+        _worldTilemap.ClearAllTiles();
 
         // Set the tiles on the tilemap
-        _worldTileMap.SetTiles(positions, terrainArray);
+        _worldTilemap.SetTiles(positions, terrainArray);
 
         return true;
     }

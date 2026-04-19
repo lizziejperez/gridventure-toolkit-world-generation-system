@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldGenerationController
   _config: {fileID: 11400000, guid: 5d3112c4944d37348820af08e6bdc02b, type: 2}
-  _worldTileMap: {fileID: 1997505259}
+  _worldTilemap: {fileID: 1997505259}
   _terrainTypes:
   - {fileID: 11400000, guid: 34a36ab415ceeb1428c31dd83ba52c47, type: 2}
   - {fileID: 11400000, guid: ab6e1054786113d4d870103569fe0602, type: 2}

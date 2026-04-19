@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TerrainTypeData
   _id: Path
   _debugSymbol: 80
-  _targetCoverage: 0.25
+  _targetCoverage: 1
   _tile: {fileID: 11400000, guid: bd04cd95a5da0074ead84573a63f3f43, type: 2}

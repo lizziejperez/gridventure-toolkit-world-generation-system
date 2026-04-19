@@ -15,6 +15,6 @@ MonoBehaviour:
   _height: 10
   _width: 18
   _useRandomSeed: 1
-  _seed: 1007807290
-  _noiseScale: 20
+  _seed: 389591575
+  _noiseScale: 2
   _inDebugMode: 1

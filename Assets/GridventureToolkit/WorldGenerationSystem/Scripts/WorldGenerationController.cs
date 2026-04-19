@@ -16,10 +16,9 @@ public class WorldGenerationController : MonoBehaviour
 {
     [Header("World Generation Settings")]
     [SerializeField] private WorldGenerationSystemConfig _config;
-    [SerializeField] private Tilemap _worldTileMap;
+    [SerializeField] private Tilemap _worldTilemap;
     [SerializeField] private List<TerrainTypeData> _terrainTypes;
 
-    private TerrainTypeData[,] _currentWorldTerrain;
     private WorldRenderer _worldRenderer;
 
     /// <summary>
@@ -28,10 +27,18 @@ public class WorldGenerationController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        _worldRenderer = new WorldRenderer(_config, _worldTileMap);
-        GenerateWorld();
+        _worldRenderer = new WorldRenderer(_config, _worldTilemap); // Create the world renderer
+        GenerateWorld(); // Generate the world
     }
 
+    /// <summary>
+    /// Generates a new world using the current generation settings and renders it to the Tilemap.
+    /// </summary>
+    /// <remarks>
+    /// If random seed generation is enabled, a new seed is assigned before generation.
+    /// When debug mode is enabled, the generated seed and terrain layout are logged to the Console.
+    /// If generation fails, no rendering is performed.
+    /// </remarks>
     public void GenerateWorld()
     {
         // Set random seed if it's set in the config settings
@@ -54,9 +61,6 @@ public class WorldGenerationController : MonoBehaviour
             return;
         }
 
-        // Update current world terrain stored
-        _currentWorldTerrain = worldBuilder.GetWorldTerrainData();
-
         if (_config.InDebugMode)
         {
             Debug.Log("Seed: " + _config.Seed); // print generation seed to debug log 
@@ -64,15 +68,6 @@ public class WorldGenerationController : MonoBehaviour
         }
 
         // Render the new current world terrain
-        _worldRenderer.Render(_currentWorldTerrain);
-    }
-
-    /// <summary>
-    /// Reserved for future runtime updates.
-    /// Currently unused.
-    /// </summary>
-    void Update()
-    {
-        
+        _worldRenderer.Render(worldBuilder.GetWorldTerrainData());
     }
 }
