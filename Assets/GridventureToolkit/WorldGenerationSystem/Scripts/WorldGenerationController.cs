@@ -73,5 +73,10 @@ public class WorldGenerationController : MonoBehaviour
         // Render the new current world terrain
         bool rendered = _worldRenderer.Render(worldBuilder.GetWorldTerrainData()); ;
 
+        // Handle failed render
+        if (!rendered)
+        {
+            Debug.Log("World rendering failed.");
+        }
     }
 }
