@@ -19,7 +19,7 @@ public class WorldGenerationController : MonoBehaviour
     [SerializeField] private Tilemap _worldTilemap;
     [SerializeField] private List<TerrainTypeData> _terrainTypes;
 
-    private WorldRenderer _worldRenderer;
+    private WorldRendererBase _worldRenderer;
 
     /// <summary>
     /// Initializes world generation when the scene starts.
@@ -27,8 +27,11 @@ public class WorldGenerationController : MonoBehaviour
     /// </summary>
     void Start()
     {
-        _worldRenderer = new WorldRenderer(_config, _worldTilemap); // Create the world renderer
-        GenerateWorld(); // Generate the world
+        // Create the world renderer
+        _worldRenderer = new SimpleWorldRenderer(_config, _worldTilemap);
+
+        // Generate the world and render it
+        GenerateWorld();
     }
 
     /// <summary>
@@ -68,6 +71,7 @@ public class WorldGenerationController : MonoBehaviour
         }
 
         // Render the new current world terrain
-        _worldRenderer.Render(worldBuilder.GetWorldTerrainData());
+        bool rendered = _worldRenderer.Render(worldBuilder.GetWorldTerrainData()); ;
+
     }
 }
