@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldGenerationSystemConfig
   _height: 10
   _width: 18
-  _useRandomSeed: 1
-  _seed: 389591575
-  _noiseScale: 2
+  _useRandomSeed: 0
+  _seed: 1196533787
+  _noiseScale: 3
   _inDebugMode: 1

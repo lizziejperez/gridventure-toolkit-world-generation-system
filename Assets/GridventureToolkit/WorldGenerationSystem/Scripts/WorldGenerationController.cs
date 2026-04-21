@@ -28,7 +28,7 @@ public class WorldGenerationController : MonoBehaviour
     void Start()
     {
         // Create the world renderer
-        _worldRenderer = new SimpleWorldRenderer(_config, _worldTilemap);
+        _worldRenderer = new SimpleTerrainWorldRenderer(_config, _worldTilemap);
 
         // Generate the world and render it
         GenerateWorld();
