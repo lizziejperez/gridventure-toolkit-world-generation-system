@@ -6,6 +6,7 @@
 */
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 /// <summary>
@@ -16,58 +17,107 @@ using UnityEngine.Tilemaps;
 /// target Tilemap, and tile palette used for world save and load operations.
 /// It can be called from UI buttons or runtime input.
 /// </remarks>
+[RequireComponent(typeof(PlayerInput))]
 public class WorldSaveLoadController : MonoBehaviour
 {
-    [Header("World Save & Load Settings")]
-    [SerializeField] private string _fileNameId = "0";
-    [SerializeField] private Vector3Int _saveOrigin;
-    [SerializeField] private int _saveHeight;
-    [SerializeField] private int _saveWidth;
-    [SerializeField] private Tilemap _worldTilemap;
-    [SerializeField] private List<TileBase> _tilePalette;    
+    [Header("Save Slot Settings")]
+    [SerializeField] private string _saveSlotID = "0";
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Save Region Settings")]
+    [SerializeField] private Vector3Int _saveRegionOrigin;
+    [SerializeField] private int _saveRegionWidth = 10;
+    [SerializeField] private int _saveRegionHeight = 10;    
+
+    [Header("Tilemap Reference")]
+    [SerializeField] private Tilemap _targetTilemap;
+
+    [Header("Tile Palette Settings")]
+    [SerializeField] private List<TileBase> _tilePalette;
+
+    private PlayerInput saveLoadInput;
+    private InputAction saveAction, loadAction;
+
+    private void Awake()
     {
-        
+        saveLoadInput = GetComponent<PlayerInput>();
+        saveAction = saveLoadInput.actions["Save"];
+        loadAction = saveLoadInput.actions["Load"];
+
+        if (saveAction == null)
+        {
+            Debug.LogWarning("Missing the Save action in player input map.");
+        }
+
+        if (loadAction == null)
+        {
+            Debug.LogWarning("Missing the Load action in player input map.");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        // TODO: Make keyboard input S/s call SaveWorld
-        // TODO: Make keyboard input L/l call LoadWorld
+        if (saveAction != null)
+        {
+            saveAction.started += SaveWorld;
+        }
+
+        if (loadAction != null)
+        {
+            loadAction.started += LoadWorld;
+        }        
+    }
+
+    private void OnDisable()
+    {
+        if (saveAction != null)
+        {
+            saveAction.started -= SaveWorld;
+        }
+
+        if (loadAction != null)
+        {
+            loadAction.started -= LoadWorld;
+        }
     }
 
     /// <summary>
     /// Saves the configured Tilemap region to the configured save file.
     /// </summary>
-    public void SaveWorld()
+    private void SaveWorld(InputAction.CallbackContext callbackContext)
     {
-        // Handle null or empty fileNameId
-        if (string.IsNullOrWhiteSpace(_fileNameId))
+        // Handle null or empty save slot ID
+        if (string.IsNullOrWhiteSpace(_saveSlotID))
         {
             Debug.LogWarning("Save failed: file name ID is empty.");
             return;
         }
 
         // Save the Tilemap region to the save file
-        WorldSaveSystem.Save(_saveOrigin, _saveWidth, _saveHeight, "world_save_" + _fileNameId, _worldTilemap, _tilePalette);
+        WorldSaveSystem.Save(_saveRegionOrigin, _saveRegionWidth, _saveRegionHeight, BuildSaveFileName(), _targetTilemap, _tilePalette);
     }
 
     /// <summary>
     /// Loads the configured save file and applies its saved region to the Tilemap.
     /// </summary>
-    public void LoadWorld()
+    private void LoadWorld(InputAction.CallbackContext callbackContext)
     {
-        // Handle null or empty fileNameId
-        if (string.IsNullOrWhiteSpace(_fileNameId))
+        // Handle null or empty save slot ID
+        if (string.IsNullOrWhiteSpace(_saveSlotID))
         {
             Debug.LogWarning("Load failed: file name ID is empty.");
             return;
         }
 
         // Load saved Tilemap region from the save file
-        WorldSaveSystem.Load("world_save_" + _fileNameId, _worldTilemap, _tilePalette);
+        WorldSaveSystem.Load(BuildSaveFileName(), _targetTilemap, _tilePalette);
+    }
+
+    /// <summary>
+    /// Builds the save file name used by the world save system.
+    /// </summary>
+    /// <returns>The save file name for the configured save file.</returns>
+    private string BuildSaveFileName()
+    {
+        return "world_save_" + _saveSlotID;
     }
 }

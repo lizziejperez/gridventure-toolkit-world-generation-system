@@ -8,7 +8,7 @@ using System;
 
 /// <summary>
 /// Serializable runtime save data for a generated world.
-/// Stores the world dimensions and the flattened terrain id grid so the world can be reconstructed later.
+/// Stores the world dimensions and the flattened tile palette indices in row-major order so the world can be reconstructed later.
 /// </summary>
 [Serializable]
 public class WorldSaveData
@@ -37,5 +37,5 @@ public class WorldSaveData
     /// Flattened tile palette indices in row-major order.
     /// A value of -1 represents an empty cell.
     /// </summary>
-    public int[] WorldTileIndexes;
+    public int[] TilePaletteIndices;
 }
