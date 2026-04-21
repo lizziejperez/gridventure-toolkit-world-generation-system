@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1063631219000483770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8197147536721255862}
+  - component: {fileID: 130750738151451989}
+  - component: {fileID: 7273906817012595251}
+  m_Layer: 0
+  m_Name: WorldSaveLoadController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8197147536721255862
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063631219000483770}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &130750738151451989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063631219000483770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1652cb7eb605a4d45ac757f4a079b26f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSaveLoadController
+  _saveSlotID: 0
+  _saveRegionOrigin: {x: 0, y: 0, z: 0}
+  _saveRegionWidth: 10
+  _saveRegionHeight: 10
+  _targetTilemap: {fileID: 0}
+  _tilePalette:
+  - {fileID: 11400000, guid: d8bbef462a6b74244bf04511e3e2852b, type: 2}
+  - {fileID: 11400000, guid: 4d04b7052978f2e42b6c03a647095ee1, type: 2}
+  - {fileID: 11400000, guid: 7cef9ef2f76f9da4a88aa026d9db4fef, type: 2}
+  - {fileID: 11400000, guid: 2a575bb0c05add846ad11e8049a7dc4d, type: 2}
+  - {fileID: 11400000, guid: 3a8364c01bd8d664c95320da8fdbb188, type: 2}
+  - {fileID: 11400000, guid: 551a96c3e15f44c4288390fefdcc0fe2, type: 2}
+  - {fileID: 11400000, guid: 98cbe451ae40e8c46afe19a2127c962b, type: 2}
+  - {fileID: 11400000, guid: bd04cd95a5da0074ead84573a63f3f43, type: 2}
+  - {fileID: 11400000, guid: db341ed9bbd74114aa0471b256ee30cb, type: 2}
+  - {fileID: 11400000, guid: c194ab80e6bb3da4cb5dc0ed58ee3c73, type: 2}
+  - {fileID: 11400000, guid: e35903a98bb9cd64999045e50d26cb3d, type: 2}
+--- !u!114 &7273906817012595251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063631219000483770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: d85b0452926194f469668f3861330ca6, type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Save Load World
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
