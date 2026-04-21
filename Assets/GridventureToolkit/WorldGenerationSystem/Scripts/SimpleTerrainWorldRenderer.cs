@@ -1,6 +1,6 @@
 /*
-* SimpleWorldRenderer.cs
-* Gridventure Toolkit - Simple World Renderer
+* SimpleTerrainWorldRenderer.cs
+* Gridventure Toolkit - Simple Terrain World Renderer
 * Author: Lizzie Perez
 * Version: 0.0
 */
@@ -11,14 +11,14 @@ using UnityEngine.Tilemaps;
 /// Handles converting generated terrain data into visual Tilemap output.
 /// Responsible for positioning and placing tiles based on world data.
 /// </summary>
-public class SimpleWorldRenderer : WorldRendererBase
+public class SimpleTerrainWorldRenderer : WorldRendererBase
 {
     /// <summary>
     /// Creates a new world renderer.
     /// </summary>
     /// <param name="config">The world generation configuration containing dimensions and settings.</param>
     /// <param name="worldTilemap">The Unity Tilemap where tiles will be rendered.</param>
-    public SimpleWorldRenderer(WorldGenerationSystemConfig config, Tilemap worldTilemap) : base(config, worldTilemap)
+    public SimpleTerrainWorldRenderer(WorldGenerationSystemConfig config, Tilemap worldTilemap) : base(config, worldTilemap)
     {
 
     }
