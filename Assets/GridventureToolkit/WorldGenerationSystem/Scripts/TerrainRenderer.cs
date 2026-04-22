@@ -1,6 +1,6 @@
 /*
-* WorldRendererBase.cs
-* Gridventure Toolkit - World Renderer Base
+* TerrainRenderer.cs
+* Gridventure Toolkit - Terrain Renderer
 * Author: Lizzie Perez
 * Version: 0.0
 */
@@ -8,34 +8,66 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 /// <summary>
-/// Base class for world renderers that convert generated terrain data into visual Tilemap output.
-/// This class stores shared renderer dependencies such as the world generation configuration and the target Tilemap. Concrete renderer implementations
-/// are responsible for deciding how logical terrain data should be translated into placed tiles.
+/// Handles converting generated terrain data into visual Tilemap output.
+/// Responsible for positioning and placing tiles based on world data.
 /// </summary>
-public abstract class WorldRendererBase
+public class TerrainRenderer
 {
     /// <summary>
     /// Shared world generation configuration used by the renderer.
     /// </summary>
-    protected WorldGenerationSystemConfig Config;
+    private WorldGenerationSystemConfig _config;
 
     /// <summary>
     /// Tilemap where the world will be rendered.
     /// </summary>
-    protected Tilemap WorldTilemap;
+    private Tilemap _terrainTilemap;
 
     /// <summary>
     /// Renders the generated terrain data to the target Tilemap.
     /// </summary>
     /// <param name="config">The world generation configuration containing dimensions and settings.</param>
-    /// <param name="worldTilemap">The Unity Tilemap where tiles will be rendered.</param>
-    protected WorldRendererBase(WorldGenerationSystemConfig config, Tilemap worldTilemap) 
+    /// <param name="terrainTilemap">The Unity Tilemap where tiles will be rendered.</param>
+    public TerrainRenderer(WorldGenerationSystemConfig config, Tilemap terrainTilemap)
     {
-        Config = config;
-        WorldTilemap = worldTilemap;
+        _config = config;
+        _terrainTilemap = terrainTilemap;
     }
 
-    public abstract bool Render(TerrainTypeData[,] worldTerrain);
+    public bool Render(TerrainTypeData[,] worldTerrain)
+    {
+        int width = _config.Width;
+        int height = _config.Height;
+
+        // Check that config settings match worldTerrain data
+        if (!HasValidTerrainDimensions(worldTerrain))
+        {
+            return false;
+        }
+
+        // Convert world terrain grid to a corresponding tile array
+        TileBase[] terrainArray = new TileBase[width * height];
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int i = y * width + x;
+                terrainArray[i] = worldTerrain[x, y].Tile;
+            }
+        }
+
+        // Get the positions for the tiles on the tilemap
+        Vector3Int[] positions = GetCenteredPositions(width, height);
+
+        // Clear the tilemap
+        ClearTilemap();
+
+        // Set the tiles on the tilemap
+        SetTiles(positions, terrainArray);
+
+        return true;
+    }
 
     /// <summary>
     /// Validates that the provided terrain grid matches the configured world size.
@@ -44,9 +76,9 @@ public abstract class WorldRendererBase
     /// <returns>
     /// True if the terrain grid is non-null and matches the configured width and height; otherwise, false.
     /// </returns>
-    protected bool HasValidTerrainDimensions(TerrainTypeData[,] worldTerrain)
+    private bool HasValidTerrainDimensions(TerrainTypeData[,] worldTerrain)
     {
-        return worldTerrain != null && worldTerrain.GetLength(0) == Config.Width && worldTerrain.GetLength(1) == Config.Height;
+        return worldTerrain != null && worldTerrain.GetLength(0) == _config.Width && worldTerrain.GetLength(1) == _config.Height;
     }
 
     /// <summary>
@@ -55,12 +87,12 @@ public abstract class WorldRendererBase
     /// <param name="width">The width of the rendered region.</param>
     /// <param name="height">The height of the rendered region.</param>
     /// <returns>An array of Tilemap cell positions centered around the origin.</returns>
-    protected Vector3Int[] GetCenteredPositions(int width, int height)
+    private Vector3Int[] GetCenteredPositions(int width, int height)
     {
         Vector3Int[] positions = new Vector3Int[width * height];
         int offsetX = -(width / 2);
         int offsetY = -(height / 2);
-        
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -76,9 +108,9 @@ public abstract class WorldRendererBase
     /// <summary>
     /// Clears all tiles from the target world Tilemap.
     /// </summary>
-    protected void ClearTilemap()
+    private void ClearTilemap()
     {
-        WorldTilemap.ClearAllTiles();
+        _terrainTilemap.ClearAllTiles();
     }
 
     /// <summary>
@@ -86,8 +118,8 @@ public abstract class WorldRendererBase
     /// </summary>
     /// <param name="positions">The Tilemap cell positions where tiles should be placed.</param>
     /// <param name="tiles">The tiles to place at the corresponding positions.</param>
-    protected void SetTiles(Vector3Int[] positions, TileBase[] tiles)
+    private void SetTiles(Vector3Int[] positions, TileBase[] tiles)
     {
-        WorldTilemap.SetTiles(positions, tiles);
+        _terrainTilemap.SetTiles(positions, tiles);
     }
 }
