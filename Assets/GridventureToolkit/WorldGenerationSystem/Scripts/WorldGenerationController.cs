@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Entry point for world generation.
-/// Initializes generation systems, triggers terrain creation, and handles debug output.
+/// Initializes terrain generation, terrain rendering, feature placement, and debug output.
 /// </summary>
 public class WorldGenerationController : MonoBehaviour
 {
@@ -18,29 +18,30 @@ public class WorldGenerationController : MonoBehaviour
     [SerializeField] private WorldGenerationSystemConfig _config;
     [SerializeField] private Tilemap _terrainTilemap;
     [SerializeField] private List<TerrainTypeData> _terrainTypes;
+    [SerializeField] private Transform _featuresParent;
 
     private TerrainRenderer _terrainRenderer;
 
     /// <summary>
     /// Initializes world generation when the scene starts.
-    /// Applies config settings, generates terrain, logs debug output, and triggers rendering of the world to the Tilemap.
+    /// Creates the terrain renderer and generates the initial world, including terrain rendering and feature placement.
     /// </summary>
     void Start()
     {
         // Create the world renderer
         _terrainRenderer = new TerrainRenderer(_config, _terrainTilemap);
 
-        // Generate the world and render it
+        // Generate the world, render the terrain, place features
         GenerateWorld();
     }
 
     /// <summary>
-    /// Generates a new world using the current generation settings and renders it to the Tilemap.
+    /// Generates a new world using the current generation settings, renders it to the Tilemap, and places features on the generated terrain.
     /// </summary>
     /// <remarks>
     /// If random seed generation is enabled, a new seed is assigned before generation.
     /// When debug mode is enabled, the generated seed and terrain layout are logged to the Console.
-    /// If generation fails, no rendering is performed.
+    /// If terrain generation or terrain rendering fails, feature placement is not performed.
     /// </remarks>
     public void GenerateWorld()
     {
@@ -82,5 +83,9 @@ public class WorldGenerationController : MonoBehaviour
             }
             return;
         }
+
+        // Place features
+        FeaturePlacer featurePlacer = new FeaturePlacer(_config.Seed);
+        featurePlacer.PlaceFeatures(terrainGenerator.GetTerrainData(), _featuresParent);
     }
 }

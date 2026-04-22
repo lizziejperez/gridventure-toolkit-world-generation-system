@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fdfa9f31a71854499d0179ee2ad0f8, type: 3}
+  m_Name: Rock2FeatureData
+  m_EditorClassIdentifier: Assembly-CSharp::FeatureTypeData
+  _id: rock-2
+  _prefab: {fileID: 9213413561759593392, guid: 5faf0c55a42c0aa42b0483888ce46bcb, type: 3}
+  _spawnChance: 0.025
