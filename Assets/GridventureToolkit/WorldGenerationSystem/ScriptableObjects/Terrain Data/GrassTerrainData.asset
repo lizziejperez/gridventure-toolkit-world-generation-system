@@ -16,3 +16,10 @@ MonoBehaviour:
   _debugSymbol: 71
   _targetCoverage: 1
   _tile: {fileID: 11400000, guid: 4d04b7052978f2e42b6c03a647095ee1, type: 2}
+  _allowedFeatures:
+  - {fileID: 11400000, guid: 5a92672ab1e96bf45a4fac2df2d580bf, type: 2}
+  - {fileID: 11400000, guid: 3c6161fa6f51dcc41a8e22b809411f1d, type: 2}
+  - {fileID: 11400000, guid: 56dc227af9b3b9344a6b23b2ab71d126, type: 2}
+  - {fileID: 11400000, guid: e7d0e40ba9896e74abe218590d464881, type: 2}
+  - {fileID: 11400000, guid: 91cb62a051807cf4a9968bd2bfbbe11d, type: 2}
+  - {fileID: 11400000, guid: 3c6b92d327ef813499702e3c8ced5eab, type: 2}

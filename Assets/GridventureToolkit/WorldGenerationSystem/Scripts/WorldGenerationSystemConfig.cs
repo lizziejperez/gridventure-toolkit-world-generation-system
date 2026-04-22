@@ -13,8 +13,8 @@ using UnityEngine;
 public class WorldGenerationSystemConfig : ScriptableObject
 {
     [Header("World Generation System Configuration Settings")]
-    [SerializeField] private int _height = 10;
     [SerializeField] private int _width = 18;
+    [SerializeField] private int _height = 10;    
     [SerializeField] private bool _useRandomSeed = true;
     [SerializeField] private int _seed = 12345;
     [SerializeField] private float _noiseScale = 10f;

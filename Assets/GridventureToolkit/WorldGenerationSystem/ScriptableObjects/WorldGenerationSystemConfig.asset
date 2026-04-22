@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c56da2bc5b4f840b5947c38b214986, type: 3}
   m_Name: WorldGenerationSystemConfig
   m_EditorClassIdentifier: Assembly-CSharp::WorldGenerationSystemConfig
-  _height: 10
   _width: 18
+  _height: 10
   _useRandomSeed: 0
-  _seed: 1196533787
-  _noiseScale: 3
+  _seed: -1228817926
+  _noiseScale: 4
   _inDebugMode: 1

@@ -16,3 +16,4 @@ MonoBehaviour:
   _debugSymbol: 87
   _targetCoverage: 1
   _tile: {fileID: 11400000, guid: db341ed9bbd74114aa0471b256ee30cb, type: 2}
+  _allowedFeatures: []
