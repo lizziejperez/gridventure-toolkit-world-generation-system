@@ -16,10 +16,10 @@ public class WorldGenerationController : MonoBehaviour
 {
     [Header("World Generation Settings")]
     [SerializeField] private WorldGenerationSystemConfig _config;
-    [SerializeField] private Tilemap _worldTilemap;
+    [SerializeField] private Tilemap _terrainTilemap;
     [SerializeField] private List<TerrainTypeData> _terrainTypes;
 
-    private WorldRendererBase _worldRenderer;
+    private TerrainRenderer _terrainRenderer;
 
     /// <summary>
     /// Initializes world generation when the scene starts.
@@ -28,7 +28,7 @@ public class WorldGenerationController : MonoBehaviour
     void Start()
     {
         // Create the world renderer
-        _worldRenderer = new SimpleTerrainWorldRenderer(_config, _worldTilemap);
+        _terrainRenderer = new TerrainRenderer(_config, _terrainTilemap);
 
         // Generate the world and render it
         GenerateWorld();
@@ -51,15 +51,15 @@ public class WorldGenerationController : MonoBehaviour
         }
 
         // Generate the world terrain with Perlin noise
-        WorldBuilder worldBuilder = new WorldBuilder(_config, _terrainTypes);
-        bool worldGenerated = worldBuilder.Generate();
+        TerrainGenerator terrainGenerator = new TerrainGenerator(_config, _terrainTypes);
+        bool terrainGenerated = terrainGenerator.Generate();
 
-        // Handle world generation failure
-        if (!worldGenerated)
+        // Handle terrain generation failure
+        if (!terrainGenerated)
         {
             if (_config.InDebugMode)
             {
-                Debug.Log("World generation failed.");
+                Debug.Log("Terrain generation failed.");
             }
             return;
         }
@@ -67,16 +67,20 @@ public class WorldGenerationController : MonoBehaviour
         if (_config.InDebugMode)
         {
             Debug.Log("Seed: " + _config.Seed); // print generation seed to debug log 
-            Debug.Log(worldBuilder.WorldTerrainToString()); // print the world terrain to debug log
+            Debug.Log(terrainGenerator.TerrainToString()); // print the world terrain to debug log
         }
 
         // Render the new current world terrain
-        bool rendered = _worldRenderer.Render(worldBuilder.GetWorldTerrainData()); ;
+        bool rendered = _terrainRenderer.Render(terrainGenerator.GetTerrainData());
 
         // Handle failed render
         if (!rendered)
         {
-            Debug.Log("World rendering failed.");
+            if (_config.InDebugMode)
+            {
+                Debug.Log("Terrain rendering failed.");
+            }
+            return;
         }
     }
 }

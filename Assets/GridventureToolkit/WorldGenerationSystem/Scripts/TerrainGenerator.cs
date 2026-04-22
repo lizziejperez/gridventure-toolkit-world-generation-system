@@ -1,6 +1,6 @@
 /*
- * WorldBuilder.cs
- * Gridventure Toolkit - World Builder
+ * TerrainGenerator.cs
+ * Gridventure Toolkit - Terrain Generator
  * Author: Lizzie Perez
  * Version: 0.0
  */
@@ -11,7 +11,7 @@ using UnityEngine;
 /// Generates the base logical terrain grid for the world.
 /// Handles terrain creation before the terrain is rendered visually to a Tilemap.
 /// </summary>
-public class WorldBuilder
+public class TerrainGenerator
 {
     private WorldGenerationSystemConfig _config;
     private List<TerrainTypeData> _terrainTypes;
@@ -34,7 +34,7 @@ public class WorldBuilder
     private List<TerrainNoiseRange> _terrainNoiseRanges;
 
     /// <summary>
-    /// Creates a new world builder using the provided generation settings.
+    /// Creates a new terrain generator using the provided generation settings.
     /// Initializes the logical terrain grid based on the configured world size.
     /// </summary>
     /// <param name="config">
@@ -42,17 +42,16 @@ public class WorldBuilder
     /// such as world width, world height, seed settings, and debug options.
     /// </param>
     /// <param name="terrainTypes">A list of all terrain types to generate.</param>
-    public WorldBuilder(WorldGenerationSystemConfig config, List<TerrainTypeData> terrainTypes)
+    public TerrainGenerator(WorldGenerationSystemConfig config, List<TerrainTypeData> terrainTypes)
     {
         _config = config;
         _terrainTypes = terrainTypes;
-        _worldTerrain = new TerrainTypeData[config.Width, config.Height];        
+        _worldTerrain = new TerrainTypeData[config.Width, config.Height];
     }
 
     /// <summary>
-    /// Generates the base terrain layout for the world.
+    /// Generates the Perlin-noise-based terrain layout for the world.
     /// Returns if world generation was successful or not.
-    /// The current implementation fills the entire terrain grid with default terrain.
     /// </summary>
     public bool Generate()
     {
@@ -75,7 +74,7 @@ public class WorldBuilder
     /// <returns>
     /// A string representation of the terrain grid, with rows separated by new lines.
     /// </returns>
-    public string WorldTerrainToString()
+    public string TerrainToString()
     {
         // Prevent changes with width and height during method call
         int width = _config.Width;
@@ -96,10 +95,10 @@ public class WorldBuilder
     }
 
     /// <summary>
-    /// Retruns the generated world terrain.
+    /// Returns the generated world terrain.
     /// </summary>
     /// <returns>A 2D array of the terrain grid.</returns>
-    public TerrainTypeData[,] GetWorldTerrainData()
+    public TerrainTypeData[,] GetTerrainData()
     {
         return _worldTerrain;
     }
@@ -181,6 +180,6 @@ public class WorldBuilder
                 return _terrainTypes[i];
             }
         }
-        return _terrainTypes[_terrainTypes.Count-1];
+        return _terrainTypes[_terrainTypes.Count - 1];
     }
 }
