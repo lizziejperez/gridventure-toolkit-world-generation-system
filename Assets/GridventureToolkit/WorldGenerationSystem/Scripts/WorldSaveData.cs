@@ -14,16 +14,6 @@ using System;
 public class WorldSaveData
 {
     /// <summary>
-    /// The Tilemap cell X coordinate where the saved region begins.
-    /// </summary>
-    public int OriginX;
-
-    /// <summary>
-    /// The Tilemap cell Y coordinate where the saved region begins.
-    /// </summary>
-    public int OriginY;
-
-    /// <summary>
     /// The number of columns in the saved region.
     /// </summary>
     public int Width;
@@ -38,4 +28,9 @@ public class WorldSaveData
     /// A value of -1 represents an empty cell.
     /// </summary>
     public int[] TilePaletteIndices;
+
+    /// <summary>
+    /// The collection of saved feature instances placed in the world.
+    /// </summary>
+    public WorldFeatureSaveData[] PlacedFeatures;
 }

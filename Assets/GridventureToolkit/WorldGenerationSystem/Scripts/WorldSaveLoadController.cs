@@ -24,15 +24,16 @@ public class WorldSaveLoadController : MonoBehaviour
     [SerializeField] private string _saveSlotID = "0";
 
     [Header("Save Region Settings")]
-    [SerializeField] private Vector3Int _saveRegionOrigin;
-    [SerializeField] private int _saveRegionWidth = 10;
+    [SerializeField] private int _saveRegionWidth = 18;
     [SerializeField] private int _saveRegionHeight = 10;    
 
-    [Header("Tilemap Reference")]
+    [Header("Terrain Settings")]
     [SerializeField] private Tilemap _targetTilemap;
-
-    [Header("Tile Palette Settings")]
     [SerializeField] private List<TileBase> _tilePalette;
+
+    [Header("Feature Settings")]
+    [SerializeField] private Transform _featuresParent;
+    [SerializeField] private List<FeatureTypeData> _featureTypes;
 
     private PlayerInput saveLoadInput;
     private InputAction saveAction, loadAction;
@@ -93,7 +94,7 @@ public class WorldSaveLoadController : MonoBehaviour
         }
 
         // Save the Tilemap region to the save file
-        WorldSaveSystem.Save(_saveRegionOrigin, _saveRegionWidth, _saveRegionHeight, BuildSaveFileName(), _targetTilemap, _tilePalette);
+        WorldSaveSystem.Save(_saveRegionWidth, _saveRegionHeight, BuildSaveFileName(), _targetTilemap, _tilePalette, _featuresParent, _featureTypes);
     }
 
     /// <summary>
@@ -109,7 +110,7 @@ public class WorldSaveLoadController : MonoBehaviour
         }
 
         // Load saved Tilemap region from the save file
-        WorldSaveSystem.Load(BuildSaveFileName(), _targetTilemap, _tilePalette);
+        WorldSaveSystem.Load(BuildSaveFileName(), _targetTilemap, _tilePalette, _featuresParent, _featureTypes);
     }
 
     /// <summary>

@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldSaveLoadController
   _saveSlotID: 0
-  _saveRegionOrigin: {x: 0, y: 0, z: 0}
-  _saveRegionWidth: 10
+  _saveRegionWidth: 18
   _saveRegionHeight: 10
   _targetTilemap: {fileID: 0}
   _tilePalette:
@@ -62,6 +61,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db341ed9bbd74114aa0471b256ee30cb, type: 2}
   - {fileID: 11400000, guid: c194ab80e6bb3da4cb5dc0ed58ee3c73, type: 2}
   - {fileID: 11400000, guid: e35903a98bb9cd64999045e50d26cb3d, type: 2}
+  _featuresParent: {fileID: 0}
+  _featureTypes:
+  - {fileID: 11400000, guid: 5a92672ab1e96bf45a4fac2df2d580bf, type: 2}
+  - {fileID: 11400000, guid: 3c6161fa6f51dcc41a8e22b809411f1d, type: 2}
+  - {fileID: 11400000, guid: 56dc227af9b3b9344a6b23b2ab71d126, type: 2}
+  - {fileID: 11400000, guid: e7d0e40ba9896e74abe218590d464881, type: 2}
+  - {fileID: 11400000, guid: 91cb62a051807cf4a9968bd2bfbbe11d, type: 2}
+  - {fileID: 11400000, guid: 3c6b92d327ef813499702e3c8ced5eab, type: 2}
 --- !u!114 &7273906817012595251
 MonoBehaviour:
   m_ObjectHideFlags: 0
