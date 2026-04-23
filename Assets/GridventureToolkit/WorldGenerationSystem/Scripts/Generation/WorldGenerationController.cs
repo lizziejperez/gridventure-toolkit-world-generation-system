@@ -2,7 +2,7 @@
  * WorldGenerationController.cs
  * Gridventure Toolkit - World Generation Controller
  * Author: Lizzie Perez
- * Version: 0.0
+ * Version: 1.0
  */
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,14 +65,17 @@ public class WorldGenerationController : MonoBehaviour
             return;
         }
 
+        TerrainTypeData[,] worldTerrain = terrainGenerator.GetTerrainData();
+
+        // Print to debug log if in debug mode
         if (_config.InDebugMode)
         {
-            Debug.Log("Seed: " + _config.Seed); // print generation seed to debug log 
-            Debug.Log(terrainGenerator.TerrainToString()); // print the world terrain to debug log
+            // Print the generation seed and terrain debug string
+            Debug.Log("Seed: " + _config.Seed);
+            Debug.Log(TerrainGenerator.TerrainToDebugString(worldTerrain));
         }
-
         // Render the new current world terrain
-        bool rendered = _terrainRenderer.Render(terrainGenerator.GetTerrainData());
+        bool rendered = _terrainRenderer.Render(worldTerrain);
 
         // Handle failed render
         if (!rendered)
@@ -82,10 +85,10 @@ public class WorldGenerationController : MonoBehaviour
                 Debug.Log("Terrain rendering failed.");
             }
             return;
-        }
+        }        
 
         // Place features
         FeaturePlacer featurePlacer = new FeaturePlacer(_config.Seed);
-        featurePlacer.PlaceFeatures(terrainGenerator.GetTerrainData(), _featuresParent);
+        featurePlacer.PlaceFeatures(worldTerrain, _featuresParent);
     }
 }

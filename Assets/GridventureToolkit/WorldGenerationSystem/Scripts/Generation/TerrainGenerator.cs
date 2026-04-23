@@ -2,7 +2,7 @@
  * TerrainGenerator.cs
  * Gridventure Toolkit - Terrain Generator
  * Author: Lizzie Perez
- * Version: 0.0
+ * Version: 1.0
  */
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,27 +71,34 @@ public class TerrainGenerator
     /// Useful for debugging terrain generation in the console.
     /// Each terrain type is represented by its debug symbol.
     /// </summary>
+    /// <param name="terrain">The terrain grid to convert to debug string</param>
     /// <returns>
     /// A string representation of the terrain grid, with rows separated by new lines.
     /// </returns>
-    public string TerrainToString()
+    public static string TerrainToDebugString(TerrainTypeData[,] terrain)
     {
-        // Prevent changes with width and height during method call
-        int width = _config.Width;
-        int height = _config.Height;
+        // Get the width and height
+        int width = terrain.GetLength(0);
+        int height = terrain.GetLength(1);
 
-        string terrainGrid = "";
+        string debugString = "";
 
         for (int y = height - 1; y >= 0; y--)
         {
             for (int x = 0; x < width; x++)
             {
-                terrainGrid += _worldTerrain[x, y].DebugSymbol + " ";
+                if (terrain[x, y] == null)
+                {
+                    debugString += "? ";
+                } else
+                {
+                    debugString += terrain[x, y].DebugSymbol + " ";
+                }                    
             }
-            terrainGrid += "\n";
+            debugString += "\n";
         }
 
-        return terrainGrid;
+        return debugString;
     }
 
     /// <summary>

@@ -1,8 +1,8 @@
 /*
- * FeatureTypeData.cs
- * Gridventure Toolkit - Feature Placer
+ * FeaturePlacer.cs
+ * Gridventure Toolkit - Feature Placement System
  * Author: Lizzie Perez
- * Version: 0.0
+ * Version: 1.0
  */
 using UnityEngine;
 
@@ -49,7 +49,7 @@ public class FeaturePlacer
         {
             for (int y = 0; y < height; y++)
             {
-                // Get feature to place
+                // Determine which feature (if any) should be placed on this terrain cell
                 FeatureTypeData featureToPlace = GetFeatureToPlace(terrainData[x, y]);
 
                 // Place feature if there is one

@@ -2,7 +2,7 @@
 * WorldSaveData.cs
 * Gridventure Toolkit - World Save Data
 * Author: Lizzie Perez
-* Version: 0.0
+* Version: 1.0
 */
 using System;
 

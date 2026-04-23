@@ -2,7 +2,7 @@
 * WorldSaveSystem.cs
 * Gridventure Toolkit - World Save System
 * Author: Lizzie Perez
-* Version: 0.0
+* Version: 1.0
 */
 using System.Collections.Generic;
 using System.IO;
@@ -26,8 +26,8 @@ public static class WorldSaveSystem
     /// <param name="saveFileName">The save file name without extension.</param>
     /// <param name="targetTilemap">The Tilemap to read tiles from.</param>
     /// <param name="tilePalette">The ordered list of supported tiles used to convert TileBase references into saved indices.</param>
-    /// <param name="featuresParent"></param>
-    /// <param name="featureTypes"></param>
+    /// <param name="featuresParent">Parent transform containing feature instances to save and load.</param>
+    /// <param name="featureTypes">List of valid feature types used to validate and recreate saved features.</param>
     /// <remarks>
     /// Tiles are stored in row-major order using the index formula: index = y * width + x.
     /// A value of -1 is stored for empty cells.
@@ -70,8 +70,8 @@ public static class WorldSaveSystem
     /// <param name="saveFileName">The save file name without extension.</param>
     /// <param name="targetTilemap">The Tilemap to populate with saved tiles.</param>
     /// <param name="tilePalette">The ordered list of supported tiles used to convert saved indices back into TileBase references.</param>
-    /// <param name="featuresParent"></param>
-    /// <param name="featureTypes"></param>
+    /// <param name="featuresParent">Parent transform containing feature instances to save and load.</param>
+    /// <param name="featureTypes">List of valid feature types used to validate and recreate saved features.</param>
     /// <remarks>
     /// Saved tiles are restored starting at the saved origin stored in the save file.
     /// A saved value of -1 clears the corresponding Tilemap cell.

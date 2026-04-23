@@ -2,7 +2,7 @@
 * TerrainRenderer.cs
 * Gridventure Toolkit - Terrain Renderer
 * Author: Lizzie Perez
-* Version: 0.0
+* Version: 1.0
 */
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -34,6 +34,11 @@ public class TerrainRenderer
         _terrainTilemap = terrainTilemap;
     }
 
+    /// <summary>
+    /// Renders the provided terrain data to the Tilemap using the configured world dimensions.
+    /// </summary>
+    /// <param name="worldTerrain">The terrain grid to render</param>
+    /// <returns>True if the terrain can be rendered; otherwise false.</returns>
     public bool Render(TerrainTypeData[,] worldTerrain)
     {
         int width = _config.Width;
