@@ -103,10 +103,10 @@ TextureImporter:
       name: rock_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 0
-        width: 13
-        height: 11
+        x: 3
+        y: 2
+        width: 11
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

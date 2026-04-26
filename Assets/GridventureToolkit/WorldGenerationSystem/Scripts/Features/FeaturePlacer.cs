@@ -1,6 +1,6 @@
 /*
  * FeaturePlacer.cs
- * Gridventure Toolkit - Feature Placement System
+ * Gridventure Toolkit - Feature Placer
  * Author: Lizzie Perez
  * Version: 1.0
  */
@@ -40,7 +40,7 @@ public class FeaturePlacer
         // Calculate the offsets for placement
         // Adjust padding as needed (0.5f is center with terrain tile)
         float paddingX = 0.5f;
-        float paddingY = 0.6f;
+        float paddingY = 0.5f;
         float offsetX = -(width / 2) + paddingX;
         float offsetY = -(height / 2) + paddingY;
 
