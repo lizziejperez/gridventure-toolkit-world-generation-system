@@ -50,17 +50,11 @@ MonoBehaviour:
   _saveRegionHeight: 10
   _targetTilemap: {fileID: 0}
   _tilePalette:
-  - {fileID: 11400000, guid: d8bbef462a6b74244bf04511e3e2852b, type: 2}
-  - {fileID: 11400000, guid: 4d04b7052978f2e42b6c03a647095ee1, type: 2}
-  - {fileID: 11400000, guid: 7cef9ef2f76f9da4a88aa026d9db4fef, type: 2}
-  - {fileID: 11400000, guid: 2a575bb0c05add846ad11e8049a7dc4d, type: 2}
-  - {fileID: 11400000, guid: 3a8364c01bd8d664c95320da8fdbb188, type: 2}
-  - {fileID: 11400000, guid: 551a96c3e15f44c4288390fefdcc0fe2, type: 2}
-  - {fileID: 11400000, guid: 98cbe451ae40e8c46afe19a2127c962b, type: 2}
-  - {fileID: 11400000, guid: bd04cd95a5da0074ead84573a63f3f43, type: 2}
-  - {fileID: 11400000, guid: db341ed9bbd74114aa0471b256ee30cb, type: 2}
   - {fileID: 11400000, guid: c194ab80e6bb3da4cb5dc0ed58ee3c73, type: 2}
   - {fileID: 11400000, guid: e35903a98bb9cd64999045e50d26cb3d, type: 2}
+  - {fileID: 11400000, guid: 4d04b7052978f2e42b6c03a647095ee1, type: 2}
+  - {fileID: 11400000, guid: dde0356d44cec304a82d2ef78442ef42, type: 2}
+  - {fileID: 11400000, guid: 8e1d3710777fa364cb399a6515947697, type: 2}
   _featuresParent: {fileID: 0}
   _featureTypes:
   - {fileID: 11400000, guid: 5a92672ab1e96bf45a4fac2df2d580bf, type: 2}

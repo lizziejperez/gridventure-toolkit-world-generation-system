@@ -15,5 +15,6 @@ MonoBehaviour:
   _id: Path
   _debugSymbol: 80
   _targetCoverage: 1
-  _tile: {fileID: 11400000, guid: bd04cd95a5da0074ead84573a63f3f43, type: 2}
+  _useLimitedTileSetCleanup: 0
+  _tile: {fileID: 11400000, guid: dde0356d44cec304a82d2ef78442ef42, type: 2}
   _allowedFeatures: []

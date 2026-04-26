@@ -22,7 +22,6 @@ public class TerrainTypeData : ScriptableObject
     [Header("Generation")]
     [Range(0.0f, 1.0f)]
     [SerializeField] private float _targetCoverage = 0.0f;
-    [SerializeField] private bool _useLimitedTileSetCleanup = false;
 
     [Header("Rendering")]
     [SerializeField] private TileBase _tile;
@@ -45,11 +44,6 @@ public class TerrainTypeData : ScriptableObject
     /// Higher values give this terrain type a larger share of the generated terrain.
     /// </summary>
     public float TargetCoverage => _targetCoverage;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public bool UseLimitedTileSetCleanup => _useLimitedTileSetCleanup;
 
     /// <summary>
     /// Gets the Tilemap tile used to visually render this terrain type.

@@ -74,6 +74,7 @@ public class WorldGenerationController : MonoBehaviour
             Debug.Log("Seed: " + _config.Seed);
             Debug.Log(TerrainGenerator.TerrainToDebugString(worldTerrain));
         }
+
         // Render the new current world terrain
         bool rendered = _terrainRenderer.Render(worldTerrain);
 
