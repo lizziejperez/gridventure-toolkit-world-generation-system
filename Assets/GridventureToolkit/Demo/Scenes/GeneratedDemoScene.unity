@@ -690,6 +690,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 130750738151451989, guid: 823ff6982d2cd5c49af289345558dcc6, type: 3}
+      propertyPath: _saveSlotID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 130750738151451989, guid: 823ff6982d2cd5c49af289345558dcc6, type: 3}
       propertyPath: _targetTilemap
       value: 
       objectReference: {fileID: 1997505259}
