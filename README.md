@@ -1,91 +1,127 @@
 # Gridventure Toolkit: World Generation System (Unity C#)
 
-🚧 **Status: In Development (v0.3 - Procedural Terrain Generation and Tile Save/Load Implemented)**
+**Version:** 1.0
 
-A modular Unity world generation system designed for creating procedural environments using grid-based generation, auto-tiling, and Perlin noise.
+A beginner-friendly, modular Unity system for generating procedural 2D worlds using Tilemaps, Perlin noise, and ScriptableObject-driven design.
 
-This system is part of the **Gridventure Toolkit**, focused on building beginner-friendly, reusable systems for Unity game development.
+Part of the **Gridventure Toolkit** — reusable systems for building 2D top-down games in Unity.
 
-## Overview
+## Features
 
-This project provides a foundation for procedural world generation in Unity using a tile-based workflow.
-
-It includes a working Tilemap system with Rule Tiles for terrain rendering, procedural terrain generation using Perlin noise, and a save/load system that allows rectangular Tilemap regions to be persisted and restored using palette-based tile indexing.
-
-The system is designed to separate logical world generation, visual rendering, and persistence into modular, easy-to-understand components.
-
-## Scripts
-
-* `TerrainTypeData.cs`
-* `WorldGenerationSystemConfig.cs`
-* `WorldGenerationController.cs`
-* `WorldBuilder.cs`
-* `WorldRenderer.cs`
-* `WorldSaveData.cs`
-* `WorldSaveSystem.cs`
-* `WorldSaveLoadController.cs`
-
-## Current Features
-
-* Grid and Tilemap setup in Unity
-* Tile Palette workflow for painting terrain
-* Path Rule Tile (auto-tiling)
-* Water Rule Tile (auto-tiling)
-* Grass system with random variation (flowers)
-* Layered terrain approach (grass, path, water)
 * Procedural terrain generation using Perlin noise
-* Configurable world generation settings
-* Runtime world generation through a controller-driven workflow
+* Tilemap-based rendering with Rule Tile support
+* Data-driven terrain and feature setup (ScriptableObjects)
+* Deterministic world generation using seeds
+* Feature placement system (trees, rocks, etc.)
+* Save & load system using tile palette indexing
+* Clean, modular architecture (easy to extend)
 
-### Save & Load System
+## How It Works (Quick Overview)
 
-* Save rectangular Tilemap regions using tile palette indices
-* Load and reconstruct Tilemap regions from saved data
-* Configurable save origin, width, and height
-* JSON-based save files using `Application.persistentDataPath`
+1. **Terrain is generated** using Perlin noise
+2. **Terrain is rendered** to a Unity Tilemap
+3. **Features are placed** based on terrain rules
+4. *(Optional)* World can be saved and loaded
 
-## Planned Features
+For a full breakdown of how all scripts work together, see:
 
-* Feature placement system (trees, rocks, bushes, caves)
-* Terrain validation and terrain rule processing
-* More advanced rendering options (dual-grid)
-* Modular architecture for easy extension
+[World Generation System Documentation](world-generation.md)
 
-## Current Progress
+## How to Use (Beginner Friendly)
 
-* Project initialized
-* Repository structure set up
-* Tilemap system implemented
-* Rule Tile system integrated
-* Procedural terrain generation working with Perlin noise
-* Terrain rendering working in-scene
-* Initial world save/load system implemented
+### 1. Import into Your Project
+
+* Import the scripts into your Unity project
+* Make sure you have:
+  * A **Grid**
+  * A **Tilemap** (for terrain)
+
+### 2. Create Terrain Types
+
+Create ScriptableObjects:
+
+**Right Click → Create → Gridventure Toolkit → Terrain Type Data**
+
+For each terrain:
+
+* Set **ID** (e.g. Grass, Water, Path)
+* Assign a **Tile**
+* Set **Target Coverage** (how often it appears)
+* Assign allowed **Feature Types** (optional)
+
+### 3. Create Feature Types (Optional)
+
+**Right Click → Create → Gridventure Toolkit → Feature Type Data**
+
+For each feature:
+
+* Set **ID** (e.g. Tree, Rock)
+* Assign a **Prefab**
+* Set **Spawn Chance** (0–1)
+
+### 4. Create World Config
+
+**Right Click → Create → Gridventure Toolkit → World Generation System Config**
+
+Set:
+
+* Width / Height
+* Noise Scale
+* Seed (or enable random seed)
+* Debug mode (optional)
+
+### 5. Set Up the Scene
+
+Add **WorldGenerationController** to a GameObject:
+
+Assign:
+
+* Config
+* Terrain Tilemap
+* Terrain Types list
+* Features Parent (empty GameObject)
+
+### 6. Press Play
+
+* A world will generate automatically at runtime
+* Terrain renders to Tilemap
+* Features spawn on valid tiles
+
+## Save & Load (Optional)
+
+### Setup
+
+Add **WorldSaveLoadController** to a GameObject:
+
+Assign:
+
+* Tilemap
+* Tile Palette (important!)
+* Features Parent
+* Feature Types list
+
+### Usage
+
+* Trigger Save/Load via input or UI
+* Worlds are stored as JSON files
+* Uses `Application.persistentDataPath`
 
 ## Design Goals
 
-* Beginner-friendly and easy to understand
+* Beginner-friendly
 * Modular and reusable
 * Clean separation of systems
-* Consistent with other Gridventure Toolkit systems
-* Scalable for more advanced generation systems later
-
-## Future Systems
-
-This system will connect with:
-
-* Feature placement tools
-* Advanced terrain rule processing
-* Smoother or more advanced rendering systems
-* Expanded generation systems
+* Easy to expand for future features
 
 ## Notes
 
-This system is still in development and is not yet ready for production use.
-
-Documentation, demos, and features will continue to be expanded as development progresses.
+* Designed for **2D top-down games**
+* Uses a **centered grid system**
+* Works best with Unity Tilemaps and Rule Tiles
 
 ## 💼 Freelance & Support
 
 Need help with Unity systems or procedural generation?
 
 https://www.fiverr.com/lizziejperez
+

@@ -1,157 +1,187 @@
-# World Generation System — Notes & Concepts
+# World Generation System (v1) — Notes & Concepts
 
-**Scripts**: `TerrainTypeData.cs`, `WorldGenerationSystemConfig.cs`, `WorldGenerationController.cs`, `WorldBuilder.cs`, `WorldRenderer.cs`, `WorldSaveData.cs`, `WorldSaveSystem.cs`, `WorldSaveLoadController.cs`
+## Table of Contents
+
+* [Overview](#overview)
+* [Core Flow](#core-flow)
+* [File Breakdown](#file-breakdown)
+  * [WorldGenerationController](#worldgenerationcontroller)
+  * [WorldGenerationSystemConfig](#worldgenerationsystemconfig)
+  * [TerrainGenerator](#terraingenerator)
+  * [TerrainTypeData](#terraintypedata)
+  * [TerrainRenderer](#terrainrenderer)
+  * [FeaturePlacer](#featureplacer)
+  * [FeatureTypeData](#featuretypedata)
+* [Save & Load System (Optional)](#save--load-system-optional)
+  * [WorldSaveLoadController](#worldsaveloadcontroller)
+  * [WorldSaveSystem](#worldsavesystem)
+  * [WorldSaveData](#worldsavedata)
+  * [WorldFeatureSaveData](#worldfeaturesavedata)
+* [System Design Notes](#system-design-notes)
+* [Summary](#summary)
+* [References](#references)
 
 ## Overview
 
-This system is responsible for generating a tile-based world in Unity using a structured, data-driven approach.
+The World Generation System is responsible for creating a procedural 2D terrain, rendering it to a Tilemap, placing features, and optionally saving/loading the world state.
 
-It separates **logical world generation**, **visual rendering**, and **data persistence**, allowing terrain to be generated using a simple grid while maintaining clean and consistent visuals using Tilemaps and Rule Tiles.
+The system is modular and built around three main phases:
 
-The system builds on an existing Tilemap setup with auto-tiling support and now includes region-based Tilemap save/load support.
+1. **Generate terrain (data)**
+2. **Render terrain (visuals)**
+3. **Place features (game objects)**
 
-## Current Implementation
+## Core Flow
 
-The following systems are already implemented:
+```
+WorldGenerationController
+    ↓
+TerrainGenerator → TerrainTypeData
+    ↓
+TerrainRenderer
+    ↓
+FeaturePlacer → FeatureTypeData
+```
 
-* Grid and Tilemap setup in Unity
-* Tile Palette workflow for terrain painting
-* Rule Tile systems for terrain rendering:
-  * Grass with weighted random flower variation
-  * Path using a 4-tile auto-tiling setup
-  * Water using a 13-tile auto-tiling setup
-* Manual cliff / mountain edge tiles for elevation boundaries and cave placement
-* Feature assets and variations:
-  * Cave entrance
-  * Tree variants
-  * Rock variants
-  * Bush
-* Procedural terrain generation using Perlin noise
-* World generation controller flow for generation and rendering
-* Region-based Tilemap save/load using palette-indexed save data
+Optional:
 
-## Current Capabilities
+```
+WorldSaveLoadController → WorldSaveSystem → WorldSaveData
+```
 
-- Terrain can be painted using Rule Tiles
-- Auto-tiling handles edges and transitions
-- Layered terrain system: `grass → path/water → cliffs → features`
-- Procedural terrain can be generated using Perlin noise
-- Generated terrain can be rendered directly to a Tilemap
-- Saved Tilemap regions can be serialized and restored
+## File Breakdown
 
-## System Breakdown
+### `WorldGenerationController.cs`
 
-The world generation system will be responsible for:
+**Entry point for the system** 
 
-* Generating terrain using a logical grid
-* Applying coverage-based terrain assignment through Perlin noise
-* Converting logical data into visual tiles
-* Saving and loading Tilemap regions as reusable world data
-* Supporting future feature placement such as caves and nature objects
+* Initializes and runs world generation on scene start
+* Controls the full pipeline: generate → render → place features
+* Applies seed logic and debug output
 
-Core components:
+### `WorldGenerationSystemConfig.cs`
 
-* Logical terrain grid (`TerrainTypeData[,]`)
-* Perlin noise terrain assignment
-* Tilemap renderer
-* Tilemap save/load system
-* Future feature placement system
+**Defines world generation settings (ScriptableObject)** 
 
-## Save & Load System
+* World size (width/height)
+* Seed and randomization settings
+* Noise scale for terrain generation
+* Debug mode toggle
 
-The save/load system is responsible for persisting Tilemap data independently of procedural generation.
+Used by all core systems for consistency.
 
-### Approach
+### `TerrainGenerator.cs`
 
-* Tilemaps are treated as the source of truth for saved visual data
-* Tiles are stored as indices into a predefined tile palette
-* A rectangular region is saved using:
-  * origin (bottom-left Tilemap cell)
-  * width
-  * height
+**Creates the logical terrain grid** 
 
-### Save Data Structure
+* Uses Perlin noise to generate terrain
+* Maps noise values to terrain types using coverage ranges
+* Outputs a `TerrainTypeData[,]` grid
 
-* `OriginX`, `OriginY` — starting Tilemap cell position
-* `Width`, `Height` — dimensions of the saved region
-* `WorldTileIndexes[]` — flattened array of tile palette indices
-  * `-1` represents an empty cell
+This is **data-only** (no visuals).
 
-### Responsibilities
+### `TerrainTypeData.cs`
 
-* `WorldSaveSystem`
-  * Handles serialization and deserialization
-  * Converts Tilemap tiles to palette indices when saving
-  * Converts palette indices back into Tilemap tiles when loading
+**Defines a terrain type (ScriptableObject)** 
 
-* `WorldSaveLoadController`
-  * Stores save configuration in the Inspector
-  * Defines the file name id, save origin, save width, save height, Tilemap, and tile palette
-  * Provides public save/load methods for runtime use
+* Unique ID and debug symbol
+* Target coverage (generation weight)
+* Tile for rendering
+* Allowed features for placement
 
-### Design Notes
+Acts as the **bridge between generation, rendering, and features**.
 
-* TileBase references are not serialized directly
-* Palette indices provide stable, lightweight save data
-* Save/load is decoupled from procedural generation config
-* Save/load currently operates on rectangular Tilemap regions
+### `TerrainRenderer.cs`
 
-## Design Decisions
+**Converts terrain data into visuals** 
 
-* Use a ScriptableObject for world generation configuration
-* Use `TerrainTypeData` ScriptableObjects to define terrain identity, generation coverage, and rendering tile
-* Use a logical terrain grid for generation
-* Use Tilemaps as the primary rendering layer
-* Allow Tilemaps to act as the persistence source for saved visual data
-* Keep generation, rendering, and persistence as separate responsibilities
-* Build modular systems that can be expanded later
+* Takes terrain grid and renders it to a Tilemap
+* Uses centered positioning based on world size
+* Batches tile placement for performance
 
-### Structure
+Handles **visual output only**.
 
-- `TerrainTypeData` ScriptableObject for terrain type data
-- `TerrainNoiseRange` struct for Min and Max Perlin noise values assigned to a terrain type
-- `WorldSaveData` class for saved Tilemap region data
-- `FeatureType` enum for placed world features (e.g. cave, tree, rock, bush)
+### `FeaturePlacer.cs`
 
-## Planned Systems
+**Places world features on terrain** 
 
-### WorldBuilder
+* Iterates through terrain grid
+* Checks allowed features per terrain type
+* Spawns prefabs based on spawn chance
+* Uses seed for deterministic placement
 
-* Expand terrain generation further as needed
-* Continue supporting coverage-based terrain generation
+Adds **gameplay elements** to the world.
 
-### WorldRenderer
+### `FeatureTypeData.cs`
 
-* Converts logical terrain into visual tile placement
-* Applies generated terrain to Unity Tilemaps
+**Defines a feature type (ScriptableObject)** 
 
-### TerrainRuleProcessor
+* Unique ID
+* Prefab reference
+* Spawn chance
 
-* Applies rules such as:
-  * Cliff cannot be placed in water
-  * Path cannot end in water
-  * Water overrides grass
-  * Cliff overrides grass
+Used by both **feature placement and save/load systems**.
 
-### FeaturePlacer
+## Save & Load System (Optional)
 
-* Places features such as:
-  * caves (on cliffs)
-  * trees (on grass)
-  * rocks and bushes
+### `WorldSaveLoadController.cs`
 
-## Workflow
+**Handles player-triggered save/load** 
 
-1. Generate logical terrain grid
-2. Assign terrain using Perlin noise and configured terrain coverage
-3. Render generated terrain using Tilemaps
-4. Optionally save a Tilemap region using the save/load system
-5. Load saved Tilemap data back into the Tilemap when needed
-<!-- 6. Expand later with terrain rules and feature placement -->
+* Connects input/UI to save system
+* Defines save region and tile palette
+* Passes data to save system
 
-## Resources
+### `WorldSaveSystem.cs`
+
+**Core save/load logic** 
+
+* Saves Tilemap as palette indices (not raw tiles)
+* Saves placed features by ID and position
+* Loads and reconstructs terrain + features
+
+### `WorldSaveData.cs`
+
+**Serialized world data** 
+
+* World dimensions
+* Flattened tile indices
+* Placed feature data
+
+### `WorldFeatureSaveData.cs`
+
+**Serialized feature instance** 
+
+* Feature ID
+* World position
+
+## System Design Notes
+
+* **Deterministic generation**: Same seed = same world + features
+* **Data-driven design**: Terrain and features use ScriptableObjects
+* **Separation of concerns**:
+
+  * Generation = data
+  * Rendering = visuals
+  * Features = gameplay
+* **Centered coordinate system**: World is positioned around origin
+
+## Summary
+
+The Gridventure Toolkit World Generation System (v1) provides a modular pipeline for:
+
+* Procedural terrain generation
+* Tilemap-based rendering
+* Feature spawning
+* Save/load support
+
+It is designed to be **extensible**, **deterministic**, and **easy to integrate** into 2D top-down games.
+
+## References
+
+The following Unity documentation and resources were used in the development of this system:
 
 - Unity Rule Tile documentation: https://docs.unity3d.com/Packages/com.unity.2d.tilemap.extras@4.3/manual/RuleTile.html?q=rule
-- https://unity.com/how-to/scriptableobject-based-enums
-- https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Tilemaps.Tilemap.SetTiles.html
-- https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html
+- Tilemap.SetTiles API: https://docs.unity3d.com/6000.3/Documentation/ScriptReference/Tilemaps.Tilemap.SetTiles.html
+- Application.persistentDataPath: https://docs.unity3d.com/ScriptReference/Application-persistentDataPath.html
+- AI-assisted tools (such as ChatGPT) were used to support development, code structuring, and documentation.
