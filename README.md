@@ -25,7 +25,7 @@ Part of the **Gridventure Toolkit** — reusable systems for building 2D top-dow
 
 For a full breakdown of how all scripts work together, see:
 
-[World Generation System Documentation](world-generation.md)
+[World Generation System Documentation](world-generation-system-notes.md)
 
 ## How to Use (Beginner Friendly)
 
