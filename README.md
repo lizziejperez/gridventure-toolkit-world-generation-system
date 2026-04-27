@@ -106,6 +106,47 @@ Assign:
 * Worlds are stored as JSON files
 * Uses `Application.persistentDataPath`
 
+### Demo Scene Controls
+
+In the included demo scene, save and load are already configured with Unity's Input System.
+
+Use either shortcut:
+
+* **Save:** `F5` or `Ctrl + S`
+* **Load:** `F9` or `Ctrl + L`
+
+When saving, the current Tilemap region and placed features are stored as a JSON file using `Application.persistentDataPath`.
+
+When loading, the saved terrain and placed features are restored into the scene.
+
+> Note: The save/load demo uses the configured Tile Palette and Feature Type list. If you add new tiles or features, make sure they are also added to those lists.
+
+## Editing Generated Worlds (Tile Palette & Prefabs)
+
+You can modify generated worlds directly in Unity using the Tile Palette and feature prefabs.
+
+### Editing Terrain (Tile Palette)
+
+1. Enter **Play Mode** and generate a world
+2. Select the **Tilemap** in the Hierarchy
+3. Open **Window → 2D → Tile Palette**
+4. Paint tiles directly onto the generated terrain
+
+### Editing Features (Prefabs)
+
+* Features (trees, rocks, etc.) are instantiated as **prefabs** under the assigned **Features Parent**
+* You can:
+  * Move them in the Scene view
+  * Duplicate or delete them
+  * Manually place new ones using the same prefabs
+
+### Notes
+
+* Changes made during Play Mode are temporary unless saved using the save system
+* To persist changes, use Save/Load or edit the scene outside Play Mode
+* Ensure your Tile Palette and Feature Types match the assets used in your configuration
+* **Feature names must exactly match their prefab names for Save/Load to work correctly** (e.g. `Tree`, not `Tree(Clone)` or renamed variations)
+
 ## Design Goals
 
 * Beginner-friendly
